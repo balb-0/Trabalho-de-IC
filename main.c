@@ -1,62 +1,41 @@
 #include <stdio.h>
+#include <locale.h>
 
 int main()
 {
-    int numero_pessoas, cont_total_pessoas = 0;
-    char resp, atividade;
-    float peso, media_peso = 0;
-    float porcentagem_bike = 0, cont_bike = 0, cont_danca = 0, cont_natacao = 0, cont_caminhada = 0;
+    setlocale(LC_ALL, "Portuguese");
 
-    resp = 's';
-    while (resp == 's')
+    int Matricula[100];
+    float Nota[100], maiorNota = 0;
+    int maiorMatricula;
+
+    for (int i = 0; i < 100; i++)
     {
+        printf("Matricula %d: ", i + 1);
+        scanf("%d", &Matricula[i]);
 
-        printf("Entre com o número de pessoas:  ");
-        scanf("%d", &numero_pessoas);
-
-        while (cont_total_pessoas < numero_pessoas)
+        printf("Nota %d: ", i + 1);
+        scanf("%f", &Nota[i]);
+        if (0 > Nota[i] < 10)
         {
-            printf("Qual é o peso da pessoa:  ");
-            scanf("%f", &peso);
-
-            printf("Qual é o tipo de esporte:  ");
-            scanf(" %c", &atividade);
-
-            if (atividade == 'c')
-            {
-                cont_caminhada++;
-            }
-            else if (atividade == 'n')
-            {
-                cont_natacao++;
-            }
-
-            else if (atividade == 'd')
-            {
-                cont_danca++;
-                media_peso = peso + media_peso;
-            }
-            else if (atividade == 'b')
-            {
-                cont_bike++;
-            }
-
-            cont_total_pessoas++;
+            printf("Nota Incorreta! Digite Novamente: ");
+            scanf("%f", &Nota[i]);
         }
-        printf("\nDeseja continuar ? (digite s para sim  e n para sair): ");
-        scanf(" %c", &resp);
-        printf("\n \n");
-        if (resp == 's')
+
+        if (Nota[i] > maiorNota)
         {
-            cont_total_pessoas = 0;
+            maiorNota = Nota[i];
+            maiorMatricula = Matricula[i];
         }
     }
-    cont_total_pessoas = cont_danca + cont_bike + cont_caminhada + cont_natacao;
-    media_peso = (media_peso / cont_danca);
-    porcentagem_bike = (cont_bike / cont_total_pessoas) * 100;
 
-    printf("A quantidade de pessoas que caminham: %.1f\n", cont_caminhada);
-    printf("A quantidade de pessoas que nadam: %.1f\n", cont_natacao);
-    printf("A média dos pesos das pessoas que dançam: %.2f\n", media_peso);
-    printf("A porcentagem de pessoas que andam de bicicleta dentre todas as pessoas analisadas: %f\n", porcentagem_bike);
+    printf("\nMaior nota: %.1f\nMatricula(s): ", maiorNota);
+
+    for (int i = 0; i < 100; i++)
+    {
+        if (Nota[i] == maiorNota)
+        {
+            printf("%d ", Matricula[i]);
+        }
+    }
 }
